@@ -23,3 +23,6 @@ TestResults.xml
 node_modules
 .next/
 .env
+
+# Sentry Auth Token
+.sentryclirc
