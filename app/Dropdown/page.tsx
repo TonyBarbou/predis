@@ -2,7 +2,7 @@
 import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem} from "@nextui-org/dropdown";
 import {Button} from "@nextui-org/button";
 
-export function Dropdown_C() {
+export default function Dropdown_C() {
   return (
     <Dropdown>
       <DropdownTrigger>

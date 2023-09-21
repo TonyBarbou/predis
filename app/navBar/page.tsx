@@ -6,7 +6,7 @@ import {Link} from "@nextui-org/link";
 import {DropdownItem, DropdownTrigger, Dropdown, DropdownMenu} from "@nextui-org/dropdown";
 import {Avatar} from "@nextui-org/avatar";
 
-export function NavBar() {
+export default function NavBar() {
   return (
     <Navbar>
       <NavbarBrand>
