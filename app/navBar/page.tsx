@@ -1,41 +1,64 @@
 'use client'
 import React from "react";
+import { usePathname } from "next/navigation";
 
-import {Navbar, NavbarBrand, NavbarContent, NavbarItem} from "@nextui-org/navbar";
+import {
+  Navbar, 
+  NavbarBrand, 
+  NavbarContent, 
+  NavbarItem, 
+  NavbarMenuToggle,
+  NavbarMenu,
+  NavbarMenuItem
+} from "@nextui-org/navbar";
 import {Link} from "@nextui-org/link";
 import {DropdownItem, DropdownTrigger, Dropdown, DropdownMenu} from "@nextui-org/dropdown";
 import {Avatar} from "@nextui-org/avatar";
 
 export default function NavBar() {
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+
+  const menuItems = [
+    "Home",
+    "Datasets",
+    "Experiments",
+    "Results",
+  ];
+
   return (
-    <Navbar className="bg-black">
-      <NavbarBrand>
-        <p className="font-bold text-inherit">Predis</p>
-      </NavbarBrand>
+    <Navbar onMenuOpenChange={setIsMenuOpen}>
+      <NavbarContent>
+        <NavbarMenuToggle
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          className="sm:hidden"
+        />
+        <NavbarBrand>
+          <p className="font-bold text-inherit text-xl">Predis</p>
+        </NavbarBrand>
+      </NavbarContent>
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        <NavbarItem isActive>
-          <Link color="foreground" href="/">
+        <NavbarItem isActive={usePathname() == "/" ? true : false}>
+          <Link color={usePathname() == "/" ? "primary" : "foreground"} href="/" aria-current={usePathname() == "/" ? "page" : "false"}>
             Home
           </Link>
         </NavbarItem>
-        <NavbarItem>
-          <Link color="foreground" href="/Datasets">
+        <NavbarItem isActive={usePathname() == "/Datasets" ? true : false}>
+          <Link color={usePathname() == "/Datasets" ? "primary" : "foreground"} href="/Datasets" aria-current={usePathname() == "/Datasets" ? "page" : "false"}>
             Datasets
           </Link>
         </NavbarItem>
-        <NavbarItem>
-          <Link color="foreground" href="/Experiments">
+        <NavbarItem isActive={usePathname() == "/Experiments" ? true : false}>
+          <Link color={usePathname() == "/Experiments" ? "primary" : "foreground"} href="/Experiments" aria-current={usePathname() == "/Experiments" ? "page" : "false"}>
             Experiments
           </Link>
         </NavbarItem>
-        <NavbarItem>
-          <Link color="foreground" href="/Results">
+        <NavbarItem isActive={usePathname() == "/Results" ? true : false}>
+          <Link color={usePathname() == "/Results" ? "primary" : "foreground"} href="/Results" aria-current={usePathname() == "/Results" ? "page" : "false"}>
             Results
           </Link>
         </NavbarItem>
       </NavbarContent>
-
       <NavbarContent as="div" justify="end">
         <Dropdown placement="bottom-end">
           <DropdownTrigger>
@@ -66,6 +89,22 @@ export default function NavBar() {
           </DropdownMenu>
         </Dropdown>
       </NavbarContent>
+      <NavbarMenu>
+        {menuItems.map((item, index) => (
+          <NavbarMenuItem key={`${item}-${index}`}>
+            <Link
+              color={
+                index === 2 ? "primary" : index === menuItems.length - 1 ? "danger" : "foreground"
+              }
+              className="w-full"
+              href="#"
+              size="lg"
+            >
+              {item}
+            </Link>
+          </NavbarMenuItem>
+        ))}
+      </NavbarMenu>
     </Navbar>
   );
 }
