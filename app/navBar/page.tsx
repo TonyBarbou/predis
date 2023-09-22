@@ -8,7 +8,7 @@ import {Avatar} from "@nextui-org/avatar";
 
 export default function NavBar() {
   return (
-    <Navbar className="bg-black text-white">
+    <Navbar className="bg-black">
       <NavbarBrand>
         <p className="font-bold text-inherit">Predis</p>
       </NavbarBrand>
@@ -49,7 +49,7 @@ export default function NavBar() {
               src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
             />
           </DropdownTrigger>
-          <DropdownMenu aria-label="Profile Actions" variant="flat">
+          <DropdownMenu aria-label="Profile Actions" variant="flat" className="text-white">
             <DropdownItem key="profile" className="h-14 gap-2">
               <p className="font-semibold">Signed in as</p>
               <p className="font-semibold">zoey@example.com</p>
