@@ -26,6 +26,7 @@ Sentry.init({
       maskAllText: true,
       blockAllMedia: true,
     }),
-    new Sentry.BrowserTracing()
+    new Sentry.BrowserTracing(),
+    new Sentry.Replay(),
   ],
 });
