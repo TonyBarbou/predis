@@ -8,7 +8,7 @@ import {Avatar} from "@nextui-org/avatar";
 
 export default function NavBar() {
   return (
-    <Navbar className="bg-black">
+    <Navbar className="bg-black text-white">
       <NavbarBrand>
         <p className="font-bold text-inherit">Predis</p>
       </NavbarBrand>

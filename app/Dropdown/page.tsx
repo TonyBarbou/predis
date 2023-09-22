@@ -4,7 +4,7 @@ import {Button} from "@nextui-org/button";
 
 export default function Dropdown_C() {
   return (
-    <Dropdown>
+    <Dropdown className="text-white">
       <DropdownTrigger>
         <Button variant="bordered">
           Open Menu
