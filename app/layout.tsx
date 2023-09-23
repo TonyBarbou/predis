@@ -4,6 +4,7 @@ import { Inter } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/react';
 import { Providers } from "./providers";
 import NavBar from "./navBar/page";
+import { ClerkProvider } from '@clerk/nextjs';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,14 +19,16 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="dark bg-black text-white">
-      <body className={inter.className}>
-        <Providers>
-          <NavBar/>
-          {children}
-          <Analytics />
-        </Providers>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en" className="dark bg-black text-white">
+        <body className={inter.className}>
+          <Providers>
+            <NavBar/>
+            {children}
+            <Analytics />
+          </Providers>
+        </body>
+      </html>
+    </ClerkProvider>
   )
 }
