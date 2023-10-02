@@ -5,7 +5,9 @@ import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, User, C
 import {EditIcon} from "./EditIcon";
 import {DeleteIcon} from "./DeleteIcon";
 import {EyeIcon} from "./EyeIcon";
-import {columns, users} from "./data.js";
+import {users} from "./data.js";
+
+import { useState, useEffect} from 'react';
 
 const statusColorMap: Record<string, ChipProps["color"]>  = {
   active: "success",
@@ -15,77 +17,51 @@ const statusColorMap: Record<string, ChipProps["color"]>  = {
 
 type User = typeof users[0];
 
-export default function App() {
-  const renderCell = React.useCallback((user: User, columnKey: React.Key) => {
-    const cellValue = user[columnKey as keyof User];
+export default function Datasets() {
+  
+  const [result, setResult] = useState([]);
 
-    switch (columnKey) {
-      case "name":
-        return (
-          <User
-            avatarProps={{radius: "lg", src: user.avatar}}
-            description={user.email}
-            name={cellValue}
-          >
-            {user.email}
-          </User>
-        );
-      case "role":
-        return (
-          <div className="flex flex-col">
-            <p className="text-bold text-sm capitalize">{cellValue}</p>
-            <p className="text-bold text-sm capitalize text-default-400">{user.team}</p>
-          </div>
-        );
-      case "status":
-        return (
-          <Chip className="capitalize" color={statusColorMap[user.status]} size="sm" variant="flat">
-            {cellValue}
-          </Chip>
-        );
-      case "actions":
-        return (
-          <div className="relative flex items-center gap-2">
-            <Tooltip content="Details">
-              <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-                <EyeIcon />
-              </span>
-            </Tooltip>
-            <Tooltip content="Edit user">
-              <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-                <EditIcon />
-              </span>
-            </Tooltip>
-            <Tooltip color="danger" content="Delete user">
-              <span className="text-lg text-danger cursor-pointer active:opacity-50">
-                <DeleteIcon />
-              </span>
-            </Tooltip>
-          </div>
-        );
-      default:
-        return cellValue;
+  let dataLoaded = 0;
+
+  useEffect(() => {
+  if (dataLoaded == 0) {
+    const searchMongo = async () => {
+      const res = await fetch('http://localhost:3000/api/mongo_read', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      });
+
+      const data = await res.json();
+      setResult(data);
+    };
+
+      searchMongo()
+      dataLoaded=1;
     }
   }, []);
 
+
   return (
-<div className="flex justify-center mt-[40px]">
-  <Table className="w-1/2" aria-label="Example table with custom cells">
-      <TableHeader columns={columns}>
-        {(column) => (
-          <TableColumn key={column.uid} align={column.uid === "actions" ? "center" : "start"}>
-            {column.name}
-          </TableColumn>
-        )}
+    <div className="flex justify-center mt-[40px]">
+    <Table aria-label="Example static collection table" className="w-4/6">
+      <TableHeader>
+        <TableColumn>NAME</TableColumn>
+        <TableColumn>EMAIL</TableColumn>
+        <TableColumn>ROLE</TableColumn>
       </TableHeader>
-      <TableBody items={users}>
-        {(item) => (
-          <TableRow key={item.id}>
-            {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
-          </TableRow>
-        )}
+      <TableBody>
+      {result.map((item: any, index: number) => (
+        <TableRow key={item.id}>
+          <TableCell>{item.name}</TableCell>
+          <TableCell>{item.email}</TableCell>
+          <TableCell>{item.role}</TableCell>
+        </TableRow>
+      )
+      )}
       </TableBody>
     </Table>
-</div>
+    </div>
   );
 }

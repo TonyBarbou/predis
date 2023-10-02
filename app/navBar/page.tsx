@@ -44,8 +44,8 @@ export default function NavBar() {
             Home
           </Link>
         </NavbarItem>
-        <NavbarItem isActive={usePathname() == "/Datasets" ? true : false}>
-          <Link color={usePathname() == "/Datasets" ? "primary" : "foreground"} href="/Datasets" aria-current={usePathname() == "/Datasets" ? "page" : "false"}>
+        <NavbarItem isActive={usePathname() == "/datasets" ? true : false}>
+          <Link color={usePathname() == "/datasets" ? "primary" : "foreground"} href="/datasets" aria-current={usePathname() == "/datasets" ? "page" : "false"}>
             Datasets
           </Link>
         </NavbarItem>
